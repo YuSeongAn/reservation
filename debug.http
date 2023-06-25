@@ -1,0 +1,125 @@
+//API Request EXAMPLE
+
+//create venue admin
+POST http://localhost:8080/business-member/sign-up
+Content-Type: application/json
+
+{
+  "email": "numbler1@numble.com",
+  "password": "password1234!@",
+  "businessLicense": "111-11-1111",
+  "businessMemberType": "VENUE_ADMIN"
+}
+
+###
+//login venue admin
+POST http://localhost:8080/business-member/login
+Content-Type: application/json
+
+{
+  "email": "numbler1@numble.com",
+  "password": "password1234!@"
+}
+
+###
+//create venue
+POST http://localhost:8080/venues
+X-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NX0.SQYxB7VR1SFLoZU-2lg4YapTvBAFdkbM8EU7BFZ6xog
+Content-Type: application/json
+
+{
+  "name": "test venue",
+  "venueType": "FIXED_TYPE",
+  "runningStartedAt": "09:00:00",
+  "runningEndedAt": "20:00:00",
+  "venueSeats": [
+    {
+      "seatNumber": "A1",
+      "seatType": "NORMAL"
+    },
+    {
+      "seatNumber": "B1",
+      "seatType": "VIP"
+    }
+  ]
+}
+
+###
+//create performance admin
+POST http://localhost:8080/business-member/sign-up
+Content-Type: application/json
+
+{
+  "email": "numbler2@numble.com",
+  "password": "password5678!@",
+  "businessLicense": "111-11-1111",
+  "businessMemberType": "PERFORMANCE_ADMIN"
+}
+
+###
+//login performance admin
+POST http://localhost:8080/business-member/login
+Content-Type: application/json
+
+{
+  "email": "numbler2@numble.com",
+  "password": "password5678!@"
+}
+
+###
+//create performance
+POST http://localhost:8080/venues/3/performances
+X-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nn0.cfdtTbHIo_3Fe5x1IqMbnC1y_QFPyU9FlOOR6VzwL5I
+Content-Type: application/json
+
+{
+  "name": "test performance",
+  "capacity": 2,
+  "startAt": "2023-06-27T12:00:00",
+  "endAt": "2023-06-27T16:00:00",
+  "normalPrice": "5000",
+  "vipPrice": "10000"
+}
+
+###
+//create member
+POST http://localhost:8080/member/sign-up
+Content-Type: application/json
+
+{
+  "email": "member1@numble.com",
+  "password": "password1357!@#"
+}
+
+###
+//login member
+POST http://localhost:8080/member/login
+Content-Type: application/json
+
+{
+  "email": "member1@numble.com",
+  "password": "password1357!@#"
+}
+
+###
+//create reservation
+POST http://localhost:8080/performances/3/reservations
+Content-Type: application/json
+X-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjF9.DvlSykhSnh_iCz_Qd-5nBwjkVxJj0nkRpzJTVkqR6cg
+
+{
+  "paymentInfo": {
+    "paymentMethodType": "CREDIT_CARD",
+    "cardNumber": "1111-1111-1111-1111",
+    "cardExpiredAt": "2027-08-18T12:00:00",
+    "cardCVC": "123"
+  },
+  "reservationSeats": [
+    {
+      "seatId": 11
+    },
+    {
+      "seatId": 12
+    }
+  ]
+}

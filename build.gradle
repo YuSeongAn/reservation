@@ -1,0 +1,73 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+        springCloudVersion = "2021.0.7"
+    }
+}
+
+plugins {
+    id "java"
+    id "org.springframework.boot" version "2.7.12"
+    id "io.spring.dependency-management" version "1.0.15.RELEASE"
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+}
+
+group = "com.numble"
+version = "0.0.1-SNAPSHOT"
+
+java {
+    sourceCompatibility = "11"
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+
+    implementation "org.apache.commons:commons-lang3:3.12.0"
+    implementation "com.auth0:java-jwt:4.4.0"
+    implementation 'org.redisson:redisson:3.20.0'
+
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    compileOnly "org.projectlombok:lombok"
+    runtimeOnly "com.mysql:mysql-connector-j"
+    annotationProcessor "org.projectlombok:lombok"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.security:spring-security-test"
+    testImplementation "com.h2database:h2:2.1.214"
+}
+
+tasks.named("test") {
+    useJUnitPlatform()
+}
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = projectDir.absolutePath + "/src/main/generated"
+}
+
+sourceSets {
+    main.java.srcDirs += ["src/main/generated"]
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
