@@ -69,7 +69,7 @@ public class ReservationService {
 		} catch (InterruptedException exception) {
 			throw new NumbleReservationException("UNKNOWN Exception");
 		} finally {
-			if (lock.isLocked()) {
+			if (lock.isLocked() && lock.isHeldByCurrentThread()) {
 				lock.unlock();
 			}
 		}
